@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Navigation from './components/Navigation';
+import AIConsultant from './components/AIConsultant';
 import HomePage from './pages/HomePage';
 import ProjectsPage from './pages/ProjectsPage';
 import ProjectDetailPage from './pages/ProjectDetailPage';
@@ -49,6 +50,7 @@ const App: React.FC = () => {
           </Routes>
         </main>
         <Footer />
+        <AIConsultant />
       </div>
     </HashRouter>
   );
