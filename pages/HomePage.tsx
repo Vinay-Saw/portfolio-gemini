@@ -7,6 +7,7 @@ const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const [isVideoOpen, setIsVideoOpen] = useState(false);
 
+  // Replace this ID with your actual YouTube video ID
   const youtubeId = 'dQw4w9WgXcQ'; 
 
   const expertise = [
@@ -14,19 +15,22 @@ const HomePage: React.FC = () => {
       title: 'Machine Learning',
       desc: 'Supervised & unsupervised learning, deep learning, and model optimization',
       icon: 'smart_toy',
-      gradient: 'from-blue-500/20 to-purple-500/20'
+      gradient: 'from-blue-500/20 to-purple-500/20',
+      iconColor: 'text-blue-500'
     },
     {
       title: 'Data Visualization',
       desc: 'Interactive dashboards, statistical charts, and compelling data stories',
       icon: 'bar_chart',
-      gradient: 'from-emerald-500/20 to-teal-500/20'
+      gradient: 'from-emerald-500/20 to-teal-500/20',
+      iconColor: 'text-emerald-500'
     },
     {
       title: 'Statistical Analysis',
       desc: 'Hypothesis testing, regression analysis, and predictive modeling',
       icon: 'query_stats',
-      gradient: 'from-orange-500/20 to-rose-500/20'
+      gradient: 'from-orange-500/20 to-rose-500/20',
+      iconColor: 'text-orange-500'
     }
   ];
 
@@ -91,10 +95,10 @@ const HomePage: React.FC = () => {
           <div className="py-16 grid grid-cols-1 md:grid-cols-3 gap-6">
             {expertise.map((item, idx) => (
               <div key={idx} className="bg-white dark:bg-card-dark rounded-2xl p-8 border border-gray-200 dark:border-border-dark flex flex-col items-center text-center group hover:border-primary/50 transition-all hover:-translate-y-1">
-                <div className={`w-14 h-14 rounded-full bg-gradient-to-br ${item.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                  <span className="material-symbols-outlined text-primary text-3xl">{item.icon}</span>
+                <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${item.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                  <span className={`material-symbols-outlined ${item.iconColor} text-3xl`}>{item.icon}</span>
                 </div>
-                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white">{item.title}</h3>
                 <p className="text-slate-500 dark:text-gray-400 text-sm leading-relaxed">{item.desc}</p>
               </div>
             ))}
@@ -176,7 +180,7 @@ const HomePage: React.FC = () => {
       {/* Video Modal */}
       {isVideoOpen && (
         <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-300"
+          className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-300"
           onClick={() => setIsVideoOpen(false)}
         >
           <div 
@@ -185,7 +189,7 @@ const HomePage: React.FC = () => {
           >
             <button 
               onClick={() => setIsVideoOpen(false)}
-              className="absolute top-4 right-4 z-[110] bg-white/10 hover:bg-white/20 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors"
+              className="absolute top-4 right-4 z-[1100] bg-white/10 hover:bg-white/20 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors"
             >
               <span className="material-symbols-outlined">close</span>
             </button>

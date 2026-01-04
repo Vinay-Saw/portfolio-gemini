@@ -47,7 +47,7 @@ const ContactPage: React.FC = () => {
                 <div className="flex flex-col">
                   <span className="text-slate-500 dark:text-text-secondary text-sm font-medium">Location</span>
                   <span className="text-slate-900 dark:text-white text-base font-semibold">Surat, India</span>
-                  <span className="text-slate-500 text-xs mt-1">Ready to relocate within India or work remotely.</span>
+                  <span className="text-slate-500 text-xs mt-1">Ready to relocate within India or work remotely outside India.</span>
                 </div>
               </div>
             </div>

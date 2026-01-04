@@ -154,7 +154,7 @@ const AboutPage: React.FC = () => {
           <section className="bg-primary/10 p-6 rounded-2xl border border-primary/20">
             <h3 className="text-lg font-bold mb-2 text-primary">Location & Availability</h3>
             <p className="text-slate-700 dark:text-slate-300 text-sm">
-              Currently based in <strong>Surat, India</strong>. I am fully ready to relocate within India for on-site opportunities or work remotely for international organizations.
+              Currently based in <strong>Surat, India</strong>. I am fully ready to relocate within India for on-site opportunities or work remotely for international organizations outside India.
             </p>
           </section>
         </div>

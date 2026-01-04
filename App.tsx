@@ -20,15 +20,15 @@ const Footer = () => (
   <footer className="bg-white dark:bg-background-dark border-t dark:border-border-dark py-12 px-6">
     <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
       <div className="text-center md:text-left">
-        <span className="text-xl font-black tracking-tighter">Vinay Saw</span>
+        <span className="text-2xl font-black tracking-tighter">Vinay Saw</span>
         <p className="text-slate-500 text-sm mt-2">Data Analyst & IIT Madras Data Science Student.</p>
       </div>
-      <div className="flex gap-8 text-sm font-semibold">
+      <div className="flex flex-wrap justify-center gap-8 text-sm font-semibold">
         <a href="https://linkedin.com/in/iitianscientist" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">LinkedIn</a>
         <a href="mailto:vinaysaw@duck.com" className="hover:text-primary transition-colors">Email</a>
         <a href="#" className="hover:text-primary transition-colors">GitHub</a>
       </div>
-      <p className="text-slate-400 text-xs">© 2026 Vinay K. Saw. Built with Gemini AI.</p>
+      <p className="text-slate-400 text-xs text-center md:text-right">© 2026 Vinay K. Saw. Built with Gemini AI.</p>
     </div>
   </footer>
 );
@@ -39,7 +39,7 @@ const App: React.FC = () => {
       <ScrollToTop />
       <div className="min-h-screen flex flex-col bg-background-light dark:bg-background-dark selection:bg-primary/20">
         <Navigation />
-        <main className="flex-grow">
+        <main className="flex-grow pt-20">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/projects" element={<ProjectsPage />} />
