@@ -11,11 +11,11 @@ export const portfolio = {
     "phone": "+91 737******48",
     "location": "Surat, India",
     "tagline": "Analytical insights from complex data",
-    "description": "Hi, I'm Vinay K. Saw. I'm an IIT Madras Data Science student with experience managing large datasets, creating daily reports, and optimizing business processes through advanced Excel automation.",
+    "description": "Hi, I'm Vinay Kumar Saw. I'm an IIT Madras Data Science student with experience managing large datasets, creating daily reports, and optimizing business processes through advanced MS Excel and Python automation.",
     "relocationInfo": "Ready to relocate within India or work remotely outside India.",
     "links": {
-      "linkedin": "https://linkedin.com/in/iitianscientist",
-      "github": "https://github.com/vinaysaw",
+      "linkedin": "https://linkedin.com/in/vinaysaw",
+      "github": "https://github.com/vinay-saw",
       "resume": "#"
     }
   },
@@ -34,8 +34,8 @@ export const portfolio = {
   ],
   "experience": [
     {
-      "title": "Admin & Sales Coordinator",
-      "company": "Fujitec Express Limited",
+      "title": "Operations Executive",
+      "company": "Fujitec Express Private Limited",
       "period": "02/2024 — Present",
       "points": [
         "Specializes in elevator installation and maintenance reporting.",
@@ -77,10 +77,10 @@ export const portfolio = {
     }
   ],
   "stats": [
-    { "value": "1.5+", "label": "Years Exp." },
+    { "value": "3+", "label": "Years Exp." },
     { "value": "Google", "label": "Certified" },
     { "value": "IIT M", "label": "B.S. Program" },
-    { "value": "700k+", "label": "Data Points" }
+    { "value": "5+", "label": "Projects" }
   ],
   "certifications": [
     { 
@@ -108,7 +108,7 @@ export const portfolio = {
     {
       "id": "1",
       "title": "Diamond Industry MIS Reporting",
-      "category": "Analytics",
+      "category": ["Analytics","ML"],
       "image": "https://images.unsplash.com/photo-1551033406-611cf9a28f67?auto=format&fit=crop&q=80&w=800",
       "desc": "Streamlined day-to-day operations for a lab-grown diamond manufacturer using advanced Excel automation.",
       "longDesc": "At Pure Cultured Diamonds LLP, I managed extensive datasets in the diamond industry. I developed automated Excel templates utilizing VLOOKUP, pivot tables, and conditional formatting to reduce workforce requirements and create meaningful reports for international sales teams.",
@@ -138,15 +138,15 @@ export const portfolio = {
   ] as Project[],
   "skills": [
     // Programming
-    { "name": "Python", "level": 85, "category": "Programming" },
-    { "name": "SQL", "level": 90, "category": "Programming" },
+    { "name": "Python", "level": 75, "category": "Programming" },
+    { "name": "SQL", "level": 80, "category": "Programming" },
     { "name": "DAX", "level": 75, "category": "Programming" },
     { "name": "Basic R", "level": 60, "category": "Programming" },
     // Tools
-    { "name": "MS Excel", "level": 98, "category": "Tools" },
-    { "name": "MS Power BI", "level": 85, "category": "Tools" },
-    { "name": "PostGre SQL", "level": 80, "category": "Tools" },
-    { "name": "LLM Prompting", "level": 90, "category": "Tools" },
+    { "name": "MS Excel", "level": 90, "category": "Tools" },
+    { "name": "MS Power BI", "level": 70, "category": "Tools" },
+    { "name": "PostGre SQL", "level": 60, "category": "Tools" },
+    { "name": "LLM Prompting", "level": 85, "category": "Tools" },
     // Soft Skills
     { "name": "Team Collaboration", "level": 95, "category": "Soft Skills" },
     { "name": "Communication", "level": 90, "category": "Soft Skills" },
