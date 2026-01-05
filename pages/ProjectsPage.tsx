@@ -7,10 +7,13 @@ const ProjectsPage: React.FC = () => {
   const [filter, setFilter] = useState('All');
   const [search, setSearch] = useState('');
   
-  const categories = useMemo(() => ['All', ...Array.from(new Set(PROJECTS.map(p => p.category)))], []);
+  const categories = useMemo(() => {
+    const allCats = PROJECTS.flatMap(p => p.categories);
+    return ['All', ...Array.from(new Set(allCats))];
+  }, []);
 
   const filteredProjects = useMemo(() => PROJECTS.filter(p => {
-    const matchesFilter = filter === 'All' || p.category === filter;
+    const matchesFilter = filter === 'All' || p.categories.includes(filter as any);
     const matchesSearch = p.title.toLowerCase().includes(search.toLowerCase()) || 
                           p.desc.toLowerCase().includes(search.toLowerCase());
     return matchesFilter && matchesSearch;
@@ -75,8 +78,10 @@ const ProjectsPage: React.FC = () => {
                 loading="lazy"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute bottom-3 left-4 right-4 z-20">
-                <span className="px-2 py-1 bg-primary/90 backdrop-blur-sm text-white text-xs font-bold rounded uppercase tracking-wider">{proj.category}</span>
+              <div className="absolute bottom-3 left-4 right-4 z-20 flex gap-2">
+                {proj.categories.map(cat => (
+                   <span key={cat} className="px-2 py-1 bg-primary/90 backdrop-blur-sm text-white text-[10px] font-bold rounded uppercase tracking-wider">{cat}</span>
+                ))}
               </div>
             </div>
             <div className="flex flex-col flex-1 p-5 md:p-6">

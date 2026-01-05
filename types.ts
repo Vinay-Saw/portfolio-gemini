@@ -2,7 +2,7 @@
 export interface Project {
   id: string;
   title: string;
-  category: 'ML' | 'NLP' | 'Vision' | 'Analytics' | 'Engineering' | 'Finance' | 'GenAI';
+  categories: ('ML' | 'NLP' | 'Vision' | 'Analytics' | 'Engineering' | 'Finance' | 'GenAI')[];
   image: string;
   desc: string;
   longDesc: string;

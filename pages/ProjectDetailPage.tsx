@@ -28,7 +28,10 @@ const ProjectDetailPage: React.FC = () => {
             <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Project Summary</h4>
             <div className="space-y-4 text-sm">
               <div className="flex justify-between"><span className="text-slate-500">Role</span><span className="font-medium dark:text-slate-200">Data Analyst</span></div>
-              <div className="flex justify-between"><span className="text-slate-500">Industry</span><span className="font-medium dark:text-slate-200">{project.category}</span></div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">Focus</span>
+                <span className="font-medium dark:text-slate-200 text-right">{project.categories.join(', ')}</span>
+              </div>
               <div className="flex justify-between"><span className="text-slate-500">Status</span><span className="font-medium text-emerald-500">Completed</span></div>
             </div>
             <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
@@ -46,7 +49,9 @@ const ProjectDetailPage: React.FC = () => {
       <article className="col-span-1 lg:col-span-9 space-y-12">
         <header className="space-y-6" id="overview">
           <div className="flex flex-wrap items-center gap-3 mb-4">
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20 tracking-wider uppercase">{project.category}</span>
+            {project.categories.map(cat => (
+              <span key={cat} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20 tracking-wider uppercase">{cat}</span>
+            ))}
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 tracking-wider uppercase">
               <span className="size-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
               Project Status: Completed

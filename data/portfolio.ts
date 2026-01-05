@@ -108,7 +108,7 @@ export const portfolio = {
     {
       "id": "1",
       "title": "Diamond Industry MIS Reporting",
-      "category": "Analytics",
+      "categories": ["Analytics"],
       "image": "https://images.unsplash.com/photo-1551033406-611cf9a28f67?auto=format&fit=crop&q=80&w=800",
       "desc": "Streamlined day-to-day operations for a lab-grown diamond manufacturer using advanced Excel automation.",
       "longDesc": "At Pure Cultured Diamonds LLP, I managed extensive datasets in the diamond industry. I developed automated Excel templates utilizing VLOOKUP, pivot tables, and conditional formatting to reduce workforce requirements and create meaningful reports for international sales teams.",
@@ -123,7 +123,7 @@ export const portfolio = {
     {
       "id": "2",
       "title": "Sales Performance Analytics",
-      "category": "Analytics",
+      "categories": ["Analytics"],
       "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
       "desc": "Weekly and monthly sales performance reporting for Fujitec Express Limited to drive revenue growth.",
       "longDesc": "Managed customer records and tracked performance metrics for an elevator installation specialist. By providing weekly and monthly data-driven recommendations, I supported the sales team in prioritizing tasks and allocating resources efficiently.",
@@ -138,7 +138,7 @@ export const portfolio = {
     {
       "id": "3",
       "title": "Customer Churn Prediction",
-      "category": "ML",
+      "categories": ["ML"],
       "image": "https://images.unsplash.com/photo-1551288049-bbda38a5f452?auto=format&fit=crop&q=80&w=800",
       "desc": "Developed a machine learning model to predict customer churn with 85% accuracy.",
       "longDesc": "Using Python and Scikit-learn, I analyzed historical customer behavior to identify key indicators of churn. The project involved data cleaning, feature engineering, and evaluating various classification models like Random Forest and Logistic Regression.",
@@ -146,7 +146,6 @@ export const portfolio = {
       "tech": ["Python", "Pandas", "Scikit-learn", "Matplotlib"],
       "metrics": [
         { "label": "Accuracy", "value": "85%", "icon": "check_circle" },
-        // Fix: corrected duplicate 'label' property to 'value'
         { "label": "Dataset", "value": "10k+ rows", "icon": "storage" },
         { "label": "Model", "value": "Random Forest", "icon": "psychology" }
       ]
@@ -154,7 +153,7 @@ export const portfolio = {
     {
       "id": "4",
       "title": "AI Content Strategy Consultant",
-      "category": "GenAI",
+      "categories": ["GenAI", "ML"],
       "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800",
       "desc": "Built a Generative AI tool to automate SEO-optimized content generation for marketing teams.",
       "longDesc": "Leveraged Gemini 3 Flash and prompt engineering to create a system that generates high-quality technical blog posts. I implemented a 'Chain of Thought' prompting strategy to ensure factual accuracy and a consistent brand voice.",
