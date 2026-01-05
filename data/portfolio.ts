@@ -115,15 +115,19 @@ export const portfolio = {
       "approach": [
         {
           "title": "Data Consolidation",
-          "content": "Aggregated fragmented memo records and vendor data into a centralized Excel ecosystem using Power Query."
+          "content": "Aggregated fragmented memo records and vendor data into a centralized Excel ecosystem using Power Query. This involved reconciling physical inventory with digital records across multiple offices."
         },
         {
           "title": "Automation Engine",
-          "content": "Built dynamic templates using VLOOKUP and Index-Match to automate stock ageing tracking and inventory movement."
+          "content": "Built dynamic templates using VLOOKUP and Index-Match to automate stock ageing tracking and inventory movement. Implemented VBA scripts for one-click report generation."
         },
         {
           "title": "Reporting Layer",
-          "content": "Developed visualized dashboards that identified high-holding inventory, enabling the team to reduce inventory turnaround time by 15%."
+          "content": "Developed visualized dashboards that identified high-holding inventory, enabling the team to reduce inventory turnaround time by 15%. Integrated heatmaps to show vendor performance."
+        },
+        {
+          "title": "Stakeholder Feedback",
+          "content": "Regularly presented findings to the management team to adjust pricing margins dynamically based on market demand and inventory levels."
         }
       ],
       "tags": ["Excel", "MIS", "Data Analysis"],
@@ -144,15 +148,19 @@ export const portfolio = {
       "approach": [
         {
           "title": "KPI Definition",
-          "content": "Collaborated with operations heads to identify core metrics like 'Lead-to-Installation' time and 'Contract Value' per region."
+          "content": "Collaborated with operations heads to identify core metrics like 'Lead-to-Installation' time and 'Contract Value' per region. Established baseline benchmarks for regional sales teams."
         },
         {
           "title": "ETL Pipeline",
-          "content": "Extracted raw ERP data, performed rigorous cleaning to remove duplicates, and mapped sales activities to specific timelines."
+          "content": "Extracted raw ERP data, performed rigorous cleaning to remove duplicates, and mapped sales activities to specific timelines. Used Python scripts for automated data extraction from legacy systems."
         },
         {
           "title": "Insight Generation",
-          "content": "Published monthly performance reports that pinpointed underperforming regions, leading to a more strategic resource allocation for sales executives."
+          "content": "Published monthly performance reports that pinpointed underperforming regions, leading to a more strategic resource allocation for sales executives. Correlated weather patterns with installation delays."
+        },
+        {
+          "title": "Strategic Pivot",
+          "content": "Identified a 20% growth opportunity in tier-2 cities by analyzing historical inquiry trends, leading to the launch of a targeted marketing campaign."
         }
       ],
       "tags": ["Sales Analysis", "ERP", "Reporting"],
@@ -173,15 +181,19 @@ export const portfolio = {
       "approach": [
         {
           "title": "EDA & Cleaning",
-          "content": "Performed Exploratory Data Analysis to identify missing data patterns and correlations between 'Days Since Last Activity' and churn status."
+          "content": "Performed Exploratory Data Analysis to identify missing data patterns and correlations between 'Days Since Last Activity' and churn status. Handled class imbalance using SMOTE techniques."
         },
         {
           "title": "Feature Engineering",
-          "content": "Created advanced features such as 'Engagement Scores' and 'Spending Trends' to improve model predictive power."
+          "content": "Created advanced features such as 'Engagement Scores' and 'Spending Trends' to improve model predictive power. Applied recursive feature elimination to select the most significant variables."
         },
         {
           "title": "Model Evaluation",
-          "content": "Tested multiple algorithms including SVM and Random Forest, settling on Random Forest for its superior handling of non-linear relationships and high accuracy (85%)."
+          "content": "Tested multiple algorithms including SVM and Random Forest, settling on Random Forest for its superior handling of non-linear relationships and high accuracy (85%). Fine-tuned hyperparameters using GridSearch."
+        },
+        {
+          "title": "Deployment Strategy",
+          "content": "Developed a prototype dashboard for the customer success team to flag 'High Risk' accounts in real-time, enabling proactive retention strategies."
         }
       ],
       "tags": ["Machine Learning", "Python", "Predictive Modeling"],
@@ -202,15 +214,19 @@ export const portfolio = {
       "approach": [
         {
           "title": "Prompt Engineering",
-          "content": "Designed specialized prompt templates using 'Chain of Thought' logic to force the LLM to verify facts before generating text."
+          "content": "Designed specialized prompt templates using 'Chain of Thought' logic to force the LLM to verify facts before generating text. Implemented few-shot prompting to maintain specific formatting requirements."
         },
         {
           "title": "API Integration",
-          "content": "Integrated the Gemini API with a Python backend to handle multi-turn conversations and context window management."
+          "content": "Integrated the Gemini API with a Python backend to handle multi-turn conversations and context window management. Used asynchronous calls to improve tool responsiveness."
         },
         {
           "title": "UX Workflow",
-          "content": "Developed a streamlined interface that allows marketing teams to input keywords and receive fully formatted, SEO-ready articles in seconds."
+          "content": "Developed a streamlined interface that allows marketing teams to input keywords and receive fully formatted, SEO-ready articles in seconds. Added a 'Critique' mode where the AI reviews its own output for SEO strength."
+        },
+        {
+          "title": "Testing & Iteration",
+          "content": "Conducted A/B tests on generated content to measure engagement and search ranking performance compared to human-written drafts, seeing a 30% increase in content output."
         }
       ],
       "tags": ["GenAI", "LLM", "Prompt Engineering"],

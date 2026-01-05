@@ -1,13 +1,69 @@
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { PROJECTS } from '../services/constants';
 
 const ProjectDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const project = PROJECTS.find(p => p.id === id);
+  const [activeSection, setActiveSection] = useState('overview');
 
   if (!project) return <Navigate to="/projects" />;
+
+  useEffect(() => {
+    const sections = ['overview', 'methodology', 'share'];
+    const observerOptions = {
+      root: null,
+      rootMargin: '-10% 0px -80% 0px',
+      threshold: 0
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    sections.forEach(sectionId => {
+      const element = document.getElementById(sectionId);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [id]);
+
+  const shareUrl = window.location.href;
+  const shareTitle = encodeURIComponent(`Check out Vinay Saw's data project: ${project.title}`);
+
+  const shareLinks = {
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
+    twitter: `https://twitter.com/intent/tweet?text=${shareTitle}&url=${encodeURIComponent(shareUrl)}`,
+    whatsapp: `https://api.whatsapp.com/send?text=${shareTitle}%20${encodeURIComponent(shareUrl)}`
+  };
+
+  const NavLink = ({ target, label }: { target: string, label: string }) => {
+    const isActive = activeSection === target;
+    return (
+      <a 
+        href={`#${target}`}
+        onClick={(e) => {
+          e.preventDefault();
+          document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' });
+        }}
+        className={`block pl-4 py-2 text-sm border-l-2 transition-all duration-200 ${
+          isActive 
+            ? 'border-primary -ml-0.5 text-primary font-bold' 
+            : 'border-transparent text-slate-600 dark:text-slate-400 hover:border-slate-400 hover:text-slate-900 dark:hover:text-white'
+        }`}
+      >
+        {label}
+      </a>
+    );
+  };
 
   return (
     <div className="pt-8 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -20,8 +76,9 @@ const ProjectDetailPage: React.FC = () => {
             </Link>
             <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4 pl-3">Sections</h3>
             <nav className="space-y-1 border-l-2 border-slate-200 dark:border-slate-800">
-              <a className="block pl-4 py-2 text-sm border-l-2 border-primary -ml-0.5 text-primary font-medium" href="#overview">Overview</a>
-              <a className="block pl-4 py-2 text-sm border-l-2 border-transparent hover:border-slate-400 text-slate-600 dark:text-slate-400 hover:text-slate-900 transition-colors" href="#methodology">Approach</a>
+              <NavLink target="overview" label="Overview" />
+              <NavLink target="methodology" label="Approach" />
+              <NavLink target="share" label="Share Project" />
             </nav>
           </div>
           <div className="bg-card-light dark:bg-card-dark rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
@@ -47,7 +104,7 @@ const ProjectDetailPage: React.FC = () => {
       </aside>
 
       <article className="col-span-1 lg:col-span-9 space-y-12">
-        <header className="space-y-6" id="overview">
+        <header className="space-y-6 scroll-mt-28" id="overview">
           <div className="flex flex-wrap items-center gap-3 mb-4">
             {project.categories.map(cat => (
               <span key={cat} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20 tracking-wider uppercase">{cat}</span>
@@ -84,13 +141,13 @@ const ProjectDetailPage: React.FC = () => {
 
         <hr className="border-slate-200 dark:border-slate-800"/>
         
-        <section id="content" className="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-300">
+        <section id="methodology" className="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-300 scroll-mt-28">
           <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center">
             <span className="w-1.5 h-8 bg-primary rounded-full mr-3"></span> Project Objective
           </h2>
           <p className="leading-relaxed text-lg mb-8">{project.longDesc}</p>
           
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center" id="methodology">
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center">
             <span className="w-1.5 h-8 bg-primary rounded-full mr-3"></span> Analytical Approach
           </h2>
           <div className="space-y-4">
@@ -100,6 +157,45 @@ const ProjectDetailPage: React.FC = () => {
                   <p>{step.content}</p>
                </div>
              ))}
+          </div>
+        </section>
+
+        <section id="share" className="pt-12 border-t border-slate-200 dark:border-slate-800 scroll-mt-28">
+          <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6">Share this Analysis</h3>
+          <div className="flex flex-wrap gap-4">
+            <a 
+              href={shareLinks.linkedin} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0077b5] text-white rounded-lg hover:brightness-110 transition-all font-semibold text-sm"
+            >
+              <i className="fab fa-linkedin text-lg"></i> LinkedIn
+            </a>
+            <a 
+              href={shareLinks.twitter} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1da1f2] text-white rounded-lg hover:brightness-110 transition-all font-semibold text-sm"
+            >
+              <i className="fab fa-twitter text-lg"></i> Twitter
+            </a>
+            <a 
+              href={shareLinks.whatsapp} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#25d366] text-white rounded-lg hover:brightness-110 transition-all font-semibold text-sm"
+            >
+              <i className="fab fa-whatsapp text-lg"></i> WhatsApp
+            </a>
+            <button 
+              onClick={() => {
+                navigator.clipboard.writeText(shareUrl);
+                alert('Project link copied to clipboard!');
+              }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-all font-semibold text-sm border border-slate-200 dark:border-slate-700"
+            >
+              <span className="material-symbols-outlined text-lg">link</span> Copy Link
+            </button>
           </div>
         </section>
 
