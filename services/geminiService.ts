@@ -2,27 +2,30 @@
 import { GoogleGenAI } from "@google/genai";
 import { PROJECTS } from "./constants";
 
+/**
+ * Interface with Vinay's custom Gemini Consultant
+ * Optimized for performance and context relevance.
+ */
 export const getAIResponse = async (userMessage: string) => {
   try {
-    // Obtain key safely at runtime
-    const apiKey = (typeof process !== 'undefined' && process.env?.API_KEY) || "";
-    const ai = new GoogleGenAI({ apiKey });
+    // Instruction: The API key must be obtained exclusively from the environment variable process.env.API_KEY.
+    // Use this process.env.API_KEY string directly when initializing.
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
     const projectSummary = PROJECTS.map(p => `${p.title}: ${p.desc}`).join("\n");
     const systemInstruction = `
       You are "Vinay's AI Consultant". Vinay Saw is a Data Analyst and IIT Madras Data Science student.
       Use this context to answer questions about Vinay's portfolio:
       
-      Expertise: Data Analytics, MIS Reporting, Advanced Excel (VLOOKUP, Pivot Tables, Dashboards), ERP Coordination.
+      Expertise: Data Analytics, MIS Reporting, Advanced Excel (VLOOKUP, Pivot Tables), ERP Coordination.
       Education: B.S. Data Science from IIT Madras (Current), B.A. History from VBU.
       Certifications: Google Data Analytics, Excel for Data Analytics, IBM Data Foundations.
       
       Vinay's Projects:
       ${projectSummary}
       
-      Your tone: Professional, analytical, but approachable. 
-      Focus: Explain how Vinay's technical skills (Excel, MIS, Analytics) solve business problems like reducing holding periods or optimizing revenue via reporting.
-      Keep responses concise (max 3 sentences) unless a detail is requested.
+      Tone: Professional, analytical, helpful.
+      Rule: Answer concisely (max 3 sentences). If you don't know something, suggest contacting Vinay.
     `;
 
     const response = await ai.models.generateContent({
@@ -30,13 +33,14 @@ export const getAIResponse = async (userMessage: string) => {
       contents: userMessage,
       config: {
         systemInstruction,
-        temperature: 0.7,
+        temperature: 0.5, // Lower temperature for more factual professional answers
       },
     });
 
-    return response.text || "I'm sorry, I couldn't process that. How else can I help you today?";
+    // Directly access the .text property from GenerateContentResponse
+    return response.text?.trim() || "I'm sorry, I couldn't process that. How else can I help you today?";
   } catch (error) {
     console.error("Gemini Error:", error);
-    return "Error: I am currently offline. Please check your internet connection and try again later.";
+    return "I'm currently unable to connect to my knowledge base. Please try again in a few moments.";
   }
 };

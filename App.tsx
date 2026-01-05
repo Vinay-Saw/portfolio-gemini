@@ -1,14 +1,16 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Navigation from './components/Navigation';
-import AIConsultant from './pages/AIConsultant';
-import HomePage from './pages/HomePage';
-import ProjectsPage from './pages/ProjectsPage';
-import ProjectDetailPage from './pages/ProjectDetailPage';
-import AboutPage from './pages/AboutPage';
-import ContactPage from './pages/ContactPage';
 import { portfolio } from './data/portfolio';
+
+// Lazy load pages for performance
+const HomePage = lazy(() => import('./pages/HomePage'));
+const ProjectsPage = lazy(() => import('./pages/ProjectsPage'));
+const ProjectDetailPage = lazy(() => import('./pages/ProjectDetailPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const AIConsultant = lazy(() => import('./pages/AIConsultant'));
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -17,6 +19,15 @@ const ScrollToTop = () => {
   }, [pathname]);
   return null;
 };
+
+const LoadingFallback = () => (
+  <div className="flex-grow flex items-center justify-center min-h-[60vh]">
+    <div className="flex flex-col items-center gap-4">
+      <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+      <p className="text-slate-500 font-medium animate-pulse text-sm uppercase tracking-widest">Loading</p>
+    </div>
+  </div>
+);
 
 const Footer = () => (
   <footer className="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 py-12 px-6">
@@ -44,16 +55,20 @@ const App: React.FC = () => {
       <div className="min-h-screen flex flex-col bg-background-light dark:bg-background-dark text-slate-900 dark:text-white selection:bg-primary/20">
         <Navigation />
         <main className="flex-grow pt-20">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/projects/:id" element={<ProjectDetailPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-          </Routes>
+          <Suspense fallback={<LoadingFallback />}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/projects" element={<ProjectsPage />} />
+              <Route path="/projects/:id" element={<ProjectDetailPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+            </Routes>
+          </Suspense>
         </main>
         <Footer />
-        <AIConsultant />
+        <Suspense fallback={null}>
+          <AIConsultant />
+        </Suspense>
       </div>
     </HashRouter>
   );

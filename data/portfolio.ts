@@ -134,6 +134,37 @@ export const portfolio = {
         { "label": "Frequency", "value": "Weekly", "icon": "calendar_month" },
         { "label": "System", "value": "ERP", "icon": "database" }
       ]
+    },
+    {
+      "id": "3",
+      "title": "Customer Churn Prediction",
+      "category": "ML",
+      "image": "https://images.unsplash.com/photo-1551288049-bbda38a5f452?auto=format&fit=crop&q=80&w=800",
+      "desc": "Developed a machine learning model to predict customer churn with 85% accuracy.",
+      "longDesc": "Using Python and Scikit-learn, I analyzed historical customer behavior to identify key indicators of churn. The project involved data cleaning, feature engineering, and evaluating various classification models like Random Forest and Logistic Regression.",
+      "tags": ["Machine Learning", "Python", "Predictive Modeling"],
+      "tech": ["Python", "Pandas", "Scikit-learn", "Matplotlib"],
+      "metrics": [
+        { "label": "Accuracy", "value": "85%", "icon": "check_circle" },
+        // Fix: corrected duplicate 'label' property to 'value'
+        { "label": "Dataset", "value": "10k+ rows", "icon": "storage" },
+        { "label": "Model", "value": "Random Forest", "icon": "psychology" }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "AI Content Strategy Consultant",
+      "category": "GenAI",
+      "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800",
+      "desc": "Built a Generative AI tool to automate SEO-optimized content generation for marketing teams.",
+      "longDesc": "Leveraged Gemini 3 Flash and prompt engineering to create a system that generates high-quality technical blog posts. I implemented a 'Chain of Thought' prompting strategy to ensure factual accuracy and a consistent brand voice.",
+      "tags": ["GenAI", "LLM", "Prompt Engineering"],
+      "tech": ["Gemini API", "Python", "Streamlit", "Natural Language Processing"],
+      "metrics": [
+        { "label": "Efficiency", "value": "4x Faster", "icon": "bolt" },
+        { "label": "Type", "value": "LLM", "icon": "auto_awesome" },
+        { "label": "Tool", "value": "Gemini 3", "icon": "robot_2" }
+      ]
     }
   ] as Project[],
   "skills": [

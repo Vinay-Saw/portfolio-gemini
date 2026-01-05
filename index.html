@@ -4,8 +4,9 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="theme-color" content="#101622">
     <title>Vinay Saw | Data Analyst Portfolio</title>
-    <meta name="description" content="Portfolio of Vinay Saw, Data Analyst and IIT Madras Data Science student specializing in MIS, Excel automation, and analytical insights." />
+    <meta name="description" content="Portfolio of Vinay Saw, Data Analyst and IIT Madras Data Science student. Specializing in MIS, Excel automation, and business intelligence." />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -20,8 +21,8 @@
     <meta property="twitter:description" content="Specializing in MIS reporting and business intelligence." />
 
     <script>
-        // Safer environment variable handling
-        window.process = { env: { API_KEY: "" } };
+        // Polyfill process.env for the browser environment
+        window.process = window.process || { env: { API_KEY: "" } };
     </script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
     <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -67,7 +68,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        /* Fix for mobile height issues with fixed elements */
         .mobile-chat-height {
             height: 500px;
             max-height: calc(100vh - 120px);
