@@ -45,9 +45,13 @@ const ProjectDetailPage: React.FC = () => {
 
       <article className="col-span-1 lg:col-span-9 space-y-12">
         <header className="space-y-6" id="overview">
-          <div className="flex flex-wrap gap-3 mb-4">
+          <div className="flex flex-wrap items-center gap-3 mb-4">
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20 tracking-wider uppercase">{project.category}</span>
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 tracking-wider uppercase">Verified</span>
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 tracking-wider uppercase">
+              <span className="size-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+              Project Status: Completed
+            </span>
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 tracking-wider uppercase">Verified</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight">{project.title}</h1>
           <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl leading-relaxed">{project.desc}</p>

@@ -30,7 +30,7 @@ const HomePage: React.FC = () => {
                 </p>
               </div>
               
-              {/* Button Container: Centered on Mobile/Tablet, Start on Desktop */}
+              {/* Button Container: Aligned in a single row on larger screens, wraps on smaller */}
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-2">
                 <button 
                   onClick={() => navigate('/projects')} 
@@ -46,13 +46,10 @@ const HomePage: React.FC = () => {
                   Watch Portfolio
                   <span className="material-symbols-outlined ml-2 text-lg">play_circle</span>
                 </button>
-                
-                <div className="flex justify-center w-full md:w-auto">
-                  <button className="flex cursor-pointer items-center justify-center rounded-lg h-12 px-6 bg-white dark:bg-transparent border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800 transition-all text-sm font-bold shadow-sm dark:shadow-none min-w-[160px]">
-                    Resume
-                    <span className="material-symbols-outlined ml-2 text-lg">download</span>
-                  </button>
-                </div>
+                <button className="flex cursor-pointer items-center justify-center rounded-lg h-12 px-6 bg-white dark:bg-transparent border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800 transition-all text-sm font-bold shadow-sm dark:shadow-none min-w-[160px]">
+                  Resume
+                  <span className="material-symbols-outlined ml-2 text-lg">download</span>
+                </button>
               </div>
             </div>
             
