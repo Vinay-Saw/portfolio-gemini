@@ -10,7 +10,7 @@ const Navigation: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -31,18 +31,17 @@ const Navigation: React.FC = () => {
     ? "text-primary font-black" 
     : "text-slate-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary";
 
-  // Use sticky to match Projects page behavior, ensuring header pushes content down
-  // Removed transparency logic to ensure consistent behavior across pages as requested
+  // Fixed solid background to prevent transparency artifacts on high-contrast hero sections
   const headerBgClass = isScrolled 
-    ? 'bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-gray-200 dark:border-gray-800 shadow-sm' 
-    : 'bg-background-light dark:bg-background-dark border-gray-200 dark:border-gray-800 shadow-sm';
+    ? 'bg-background-light dark:bg-background-dark border-gray-200 dark:border-gray-800 shadow-md' 
+    : 'bg-background-light dark:bg-background-dark border-transparent';
 
   return (
-    <header className={`sticky top-0 z-[100] w-full h-20 border-b transition-colors duration-300 ${headerBgClass}`}>
+    <header className={`sticky top-0 z-[100] w-full h-20 border-b transition-all duration-200 ${headerBgClass}`}>
       <div className="container mx-auto max-w-[1200px] px-4 md:px-6">
         <div className="flex h-20 items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white shrink-0">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white shrink-0 shadow-lg shadow-primary/20">
               <span className="material-symbols-outlined text-2xl font-bold">analytics</span>
             </div>
             <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white truncate">Vinay<span className="text-primary">Saw</span></h1>
@@ -59,6 +58,7 @@ const Navigation: React.FC = () => {
           <div className="flex items-center gap-3">
             <button 
               onClick={toggleTheme}
+              aria-label="Toggle Theme"
               className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-800 text-slate-700 dark:text-gray-400 hover:bg-primary hover:text-white transition-all"
             >
               <span className="material-symbols-outlined text-[22px]">
@@ -67,6 +67,7 @@ const Navigation: React.FC = () => {
             </button>
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+              aria-label="Toggle Mobile Menu"
               className="md:hidden flex items-center justify-center p-2 text-slate-700 dark:text-white"
             >
               <span className="material-symbols-outlined text-3xl">{isMobileMenuOpen ? 'close' : 'menu'}</span>
@@ -76,7 +77,7 @@ const Navigation: React.FC = () => {
       </div>
       
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-20 left-0 w-full bg-background-light dark:bg-background-dark border-b border-gray-200 dark:border-gray-800 p-6 flex flex-col gap-6 shadow-xl animate-in fade-in slide-in-from-top-4">
+        <div className="md:hidden absolute top-20 left-0 w-full bg-background-light dark:bg-background-dark border-b border-gray-200 dark:border-gray-800 p-6 flex flex-col gap-6 shadow-2xl animate-in fade-in slide-in-from-top-4">
           {navItems.map(item => (
             <Link key={item.path} to={item.path} onClick={() => setIsMobileMenuOpen(false)} className={`text-xl font-bold ${isActive(item.path)}`}>
               {item.label}
