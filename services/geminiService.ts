@@ -2,10 +2,12 @@
 import { GoogleGenAI } from "@google/genai";
 import { PROJECTS } from "./constants";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
-
 export const getAIResponse = async (userMessage: string) => {
   try {
+    // Obtain key safely at runtime
+    const apiKey = (typeof process !== 'undefined' && process.env?.API_KEY) || "";
+    const ai = new GoogleGenAI({ apiKey });
+    
     const projectSummary = PROJECTS.map(p => `${p.title}: ${p.desc}`).join("\n");
     const systemInstruction = `
       You are "Vinay's AI Consultant". Vinay Saw is a Data Analyst and IIT Madras Data Science student.
