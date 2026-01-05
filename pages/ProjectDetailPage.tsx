@@ -11,34 +11,43 @@ const CodeBlock = ({ title, name, snippet, language }: { title?: string, name?: 
   const inferredLang = language || (name?.endsWith('.py') ? 'python' : name?.endsWith('.sql') ? 'sql' : 'python');
 
   return (
-    <div className="mt-6 mb-4">
-      {title && <h5 className="text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
-        <span className="material-symbols-outlined text-primary text-sm">terminal</span>
-        {title}
-      </h5>}
-      <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-900 shadow-2xl">
-        <div className="bg-slate-800 px-4 py-2 flex items-center justify-between border-b border-slate-700">
-          <div className="flex gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-            <div className="w-3 h-3 rounded-full bg-amber-500/80"></div>
-            <div className="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+    <div className="mt-8 mb-6 group">
+      {title && (
+        <h5 className="text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+          <span className="material-symbols-outlined text-primary text-sm font-bold">terminal</span>
+          {title}
+        </h5>
+      )}
+      <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-[#0d1117] shadow-lg transition-all duration-300 group-hover:shadow-primary/5 group-hover:border-primary/30">
+        {/* Adaptive Header */}
+        <div className="bg-slate-50 dark:bg-[#161b22] px-4 py-2.5 flex items-center justify-between border-b border-slate-200 dark:border-slate-800">
+          <div className="flex gap-2">
+            <div className="w-3 h-3 rounded-full bg-red-400/60 dark:bg-red-500/40"></div>
+            <div className="w-3 h-3 rounded-full bg-amber-400/60 dark:bg-amber-500/40"></div>
+            <div className="w-3 h-3 rounded-full bg-emerald-400/60 dark:bg-emerald-500/40"></div>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{name || 'script.py'}</span>
-            <span className="px-1.5 py-0.5 rounded bg-slate-700 text-slate-400 text-[8px] font-black uppercase tracking-tighter">{inferredLang}</span>
+          <div className="flex items-center gap-3">
+            <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">{name || 'script.py'}</span>
+            <span className="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-[8px] font-black uppercase tracking-tighter">{inferredLang}</span>
           </div>
           <button 
             onClick={() => {
               navigator.clipboard.writeText(snippet);
-              alert('Code copied!');
+              // Simplified feedback
+              const btn = document.getElementById(`copy-${name}`);
+              if (btn) btn.innerText = 'check';
+              setTimeout(() => { if (btn) btn.innerText = 'content_copy'; }, 2000);
             }}
-            className="text-slate-400 hover:text-white transition-colors flex items-center gap-1"
+            className="text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors flex items-center gap-1.5 p-1 rounded-md hover:bg-slate-200 dark:hover:bg-white/5"
+            title="Copy Code"
           >
-            <span className="material-symbols-outlined text-sm">content_copy</span>
-            <span className="text-[10px] uppercase font-bold">Copy</span>
+            <span id={`copy-${name}`} className="material-symbols-outlined text-sm">content_copy</span>
+            <span className="text-[10px] uppercase font-bold hidden sm:inline">Copy</span>
           </button>
         </div>
-        <pre className={`p-6 overflow-x-auto font-mono text-xs sm:text-sm leading-relaxed text-slate-300 bg-[#0d1117] language-${inferredLang}`}>
+        
+        {/* Code Content - Always dark for better code readability with syntax highlighting */}
+        <pre className={`p-6 overflow-x-auto font-mono text-xs sm:text-sm leading-relaxed text-slate-300 bg-[#0d1117] scrollbar-thin scrollbar-thumb-slate-700 language-${inferredLang}`}>
           <code className={`language-${inferredLang}`}>{snippet}</code>
         </pre>
       </div>
