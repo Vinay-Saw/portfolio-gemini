@@ -1,7 +1,39 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { PROJECTS } from '../services/constants';
+
+const CodeBlock = ({ title, name, snippet }: { title?: string, name?: string, snippet: string }) => (
+  <div className="mt-6 mb-4">
+    {title && <h5 className="text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+      <span className="material-symbols-outlined text-primary text-sm">terminal</span>
+      {title}
+    </h5>}
+    <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-900 shadow-2xl">
+      <div className="bg-slate-800 px-4 py-2 flex items-center justify-between border-b border-slate-700">
+        <div className="flex gap-1.5">
+          <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+          <div className="w-3 h-3 rounded-full bg-amber-500/80"></div>
+          <div className="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+        </div>
+        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{name || 'script.py'}</span>
+        <button 
+          onClick={() => {
+            navigator.clipboard.writeText(snippet);
+            alert('Code copied!');
+          }}
+          className="text-slate-400 hover:text-white transition-colors flex items-center gap-1"
+        >
+          <span className="material-symbols-outlined text-sm">content_copy</span>
+          <span className="text-[10px] uppercase font-bold">Copy</span>
+        </button>
+      </div>
+      <pre className="p-6 overflow-x-auto font-mono text-xs sm:text-sm leading-relaxed text-slate-300 bg-[#0d1117]">
+        <code>{snippet}</code>
+      </pre>
+    </div>
+  </div>
+);
 
 const ProjectDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -11,10 +43,7 @@ const ProjectDetailPage: React.FC = () => {
   if (!project) return <Navigate to="/projects" />;
 
   useEffect(() => {
-    const sections = ['overview', 'methodology', 'snippet', 'share'].filter(id => {
-      if (id === 'snippet' && !project.codeSnippet) return false;
-      return true;
-    });
+    const sections = ['overview', 'methodology', 'share'];
     
     const observerOptions = {
       root: null,
@@ -38,7 +67,7 @@ const ProjectDetailPage: React.FC = () => {
     });
 
     return () => observer.disconnect();
-  }, [id, project.codeSnippet]);
+  }, [id]);
 
   const shareUrl = window.location.href;
   const shareTitle = encodeURIComponent(`Check out Vinay Saw's data project: ${project.title}`);
@@ -82,7 +111,6 @@ const ProjectDetailPage: React.FC = () => {
             <nav className="space-y-1 border-l-2 border-slate-200 dark:border-slate-800">
               <NavLink target="overview" label="Overview" />
               <NavLink target="methodology" label="Approach" />
-              {project.codeSnippet && <NavLink target="snippet" label="Implementation" />}
               <NavLink target="share" label="Share Project" />
             </nav>
           </div>
@@ -122,6 +150,15 @@ const ProjectDetailPage: React.FC = () => {
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight">{project.title}</h1>
           <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl leading-relaxed">{project.desc}</p>
+          
+          {project.codeSnippet && (
+            <CodeBlock 
+              title={project.codeSnippetTitle} 
+              name={project.codeSnippetName} 
+              snippet={project.codeSnippet} 
+            />
+          )}
+
           <div className="flex flex-wrap items-center gap-4 pt-4">
             <button className="inline-flex items-center justify-center px-6 py-3 bg-primary text-white text-base font-medium rounded-lg shadow-sm hover:bg-blue-600 transition-all">
               <span className="material-symbols-outlined mr-2">description</span> Full Report
@@ -146,54 +183,35 @@ const ProjectDetailPage: React.FC = () => {
 
         <hr className="border-slate-200 dark:border-slate-800"/>
         
-        <section id="methodology" className="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-300 scroll-mt-28">
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center">
-            <span className="w-1.5 h-8 bg-primary rounded-full mr-3"></span> Project Objective
-          </h2>
-          <p className="leading-relaxed text-lg mb-8">{project.longDesc}</p>
+        <section id="methodology" className="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-300 scroll-mt-28 space-y-12">
+          <div>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center">
+              <span className="w-1.5 h-8 bg-primary rounded-full mr-3"></span> Project Objective
+            </h2>
+            <p className="leading-relaxed text-lg">{project.longDesc}</p>
+          </div>
           
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center">
-            <span className="w-1.5 h-8 bg-primary rounded-full mr-3"></span> Analytical Approach
-          </h2>
-          <div className="space-y-4">
-             {project.approach.map((step, idx) => (
-               <div key={idx} className="p-6 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border dark:border-border-dark">
-                  <h4 className="font-bold mb-2">{idx + 1}. {step.title}</h4>
-                  <p>{step.content}</p>
-               </div>
-             ))}
+          <div>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center">
+              <span className="w-1.5 h-8 bg-primary rounded-full mr-3"></span> Analytical Approach
+            </h2>
+            <div className="space-y-6">
+               {project.approach.map((step, idx) => (
+                 <div key={idx} className="p-6 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border dark:border-border-dark">
+                    <h4 className="font-bold mb-2 text-slate-900 dark:text-white">{idx + 1}. {step.title}</h4>
+                    <p className="text-slate-600 dark:text-slate-300">{step.content}</p>
+                    {step.codeSnippet && (
+                      <CodeBlock 
+                        title={step.codeSnippetTitle} 
+                        name={step.codeSnippetName} 
+                        snippet={step.codeSnippet} 
+                      />
+                    )}
+                 </div>
+               ))}
+            </div>
           </div>
         </section>
-
-        {project.codeSnippet && (
-          <section id="snippet" className="scroll-mt-28">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center">
-              <span className="w-1.5 h-8 bg-primary rounded-full mr-3"></span> Technical Implementation
-            </h2>
-            <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-900 shadow-2xl">
-              <div className="bg-slate-800 px-4 py-2 flex items-center justify-between border-b border-slate-700">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-                  <div className="w-3 h-3 rounded-full bg-amber-500/80"></div>
-                  <div className="w-3 h-3 rounded-full bg-emerald-500/80"></div>
-                </div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">python_implementation.py</span>
-                <button 
-                  onClick={() => {
-                    navigator.clipboard.writeText(project.codeSnippet || '');
-                    alert('Code copied!');
-                  }}
-                  className="text-slate-400 hover:text-white transition-colors"
-                >
-                  <span className="material-symbols-outlined text-sm">content_copy</span>
-                </button>
-              </div>
-              <pre className="p-6 overflow-x-auto font-mono text-sm leading-relaxed text-slate-300 bg-[#0d1117]">
-                <code>{project.codeSnippet}</code>
-              </pre>
-            </div>
-          </section>
-        )}
 
         <section id="share" className="pt-12 border-t border-slate-200 dark:border-slate-800 scroll-mt-28">
           <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6">Share this Analysis</h3>

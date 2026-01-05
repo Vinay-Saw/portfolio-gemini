@@ -6,7 +6,15 @@ export interface Project {
   image: string;
   desc: string;
   longDesc: string;
-  approach: { title: string; content: string }[];
+  approach: { 
+    title: string; 
+    content: string;
+    codeSnippetTitle?: string;
+    codeSnippetName?: string;
+    codeSnippet?: string;
+  }[];
+  codeSnippetTitle?: string;
+  codeSnippetName?: string;
   codeSnippet?: string;
   tags: string[];
   metrics: {

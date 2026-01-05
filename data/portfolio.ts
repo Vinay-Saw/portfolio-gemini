@@ -226,10 +226,12 @@ export const portfolio = {
         },
         {
           "title": "Testing & Iteration",
-          "content": "Conducted A/B tests on generated content to measure engagement and search ranking performance compared to human-written drafts, seeing a 30% increase in content output."
+          "content": "Conducted A/B tests on generated content to measure engagement and search ranking performance compared to human-written drafts, seeing a 30% increase in content output.",
+          "codeSnippetTitle": "Technical Implementation",
+          "codeSnippetName": "python_implementation.py",
+          "codeSnippet": "import google.generativeai as genai\n\ndef generate_seo_article(topic, keywords):\n    model = genai.GenerativeModel('gemini-3-flash-preview')\n    prompt = f\"\"\"\n    Act as a Technical SEO Expert.\n    Generate a 1200-word article on {topic}.\n    Include these keywords naturally: {', '.join(keywords)}.\n    Format: Markdown with H2 and H3 headers.\n    Tone: Professional and data-driven.\n    \"\"\"\n    # Chain of Thought prompting triggered in system instructions\n    response = model.generate_content(prompt)\n    return response.text"
         }
       ],
-      "codeSnippet": "import google.generativeai as genai\n\ndef generate_seo_article(topic, keywords):\n    model = genai.GenerativeModel('gemini-3-flash-preview')\n    prompt = f\"\"\"\n    Act as a Technical SEO Expert.\n    Generate a 1200-word article on {topic}.\n    Include these keywords naturally: {', '.join(keywords)}.\n    Format: Markdown with H2 and H3 headers.\n    Tone: Professional and data-driven.\n    \"\"\"\n    # Chain of Thought prompting triggered in system instructions\n    response = model.generate_content(prompt)\n    return response.text",
       "tags": ["GenAI", "LLM", "Prompt Engineering"],
       "tech": ["Gemini API", "Python", "Streamlit", "Natural Language Processing"],
       "metrics": [
