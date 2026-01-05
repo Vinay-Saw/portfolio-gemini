@@ -115,7 +115,11 @@ export const portfolio = {
       "approach": [
         {
           "title": "Data Consolidation",
-          "content": "Aggregated fragmented memo records and vendor data into a centralized Excel ecosystem using Power Query. This involved reconciling physical inventory with digital records across multiple offices."
+          "content": "Aggregated fragmented memo records and vendor data into a centralized Excel ecosystem using Power Query. This involved reconciling physical inventory with digital records across multiple offices.",
+          "codeSnippetTitle": "Inventory Query",
+          "codeSnippetName": "fetch_stock.sql",
+          "codeSnippetLanguage": "sql",
+          "codeSnippet": "SELECT \n    sku_id, \n    diamond_type, \n    carat_weight, \n    DATEDIFF(CURDATE(), purchase_date) AS stock_age\nFROM diamond_inventory\nWHERE status = 'Available'\nORDER BY stock_age DESC;"
         },
         {
           "title": "Automation Engine",
@@ -189,7 +193,11 @@ export const portfolio = {
         },
         {
           "title": "Model Evaluation",
-          "content": "Tested multiple algorithms including SVM and Random Forest, settling on Random Forest for its superior handling of non-linear relationships and high accuracy (85%). Fine-tuned hyperparameters using GridSearch."
+          "content": "Tested multiple algorithms including SVM and Random Forest, settling on Random Forest for its superior handling of non-linear relationships and high accuracy (85%). Fine-tuned hyperparameters using GridSearch.",
+          "codeSnippetTitle": "Model Training",
+          "codeSnippetName": "train_model.py",
+          "codeSnippetLanguage": "python",
+          "codeSnippet": "from sklearn.ensemble import RandomForestClassifier\nfrom sklearn.metrics import accuracy_score\n\n# Initialize and train\nclf = RandomForestClassifier(n_estimators=100, max_depth=10)\nclf.fit(X_train, y_train)\n\n# Predict\ny_pred = clf.predict(X_test)\nprint(f'Model Accuracy: {accuracy_score(y_test, y_pred):.2%}')"
         },
         {
           "title": "Deployment Strategy",
@@ -229,6 +237,7 @@ export const portfolio = {
           "content": "Conducted A/B tests on generated content to measure engagement and search ranking performance compared to human-written drafts, seeing a 30% increase in content output.",
           "codeSnippetTitle": "Technical Implementation",
           "codeSnippetName": "python_implementation.py",
+          "codeSnippetLanguage": "python",
           "codeSnippet": "import google.generativeai as genai\n\ndef generate_seo_article(topic, keywords):\n    model = genai.GenerativeModel('gemini-3-flash-preview')\n    prompt = f\"\"\"\n    Act as a Technical SEO Expert.\n    Generate a 1200-word article on {topic}.\n    Include these keywords naturally: {', '.join(keywords)}.\n    Format: Markdown with H2 and H3 headers.\n    Tone: Professional and data-driven.\n    \"\"\"\n    # Chain of Thought prompting triggered in system instructions\n    response = model.generate_content(prompt)\n    return response.text"
         }
       ],

@@ -11,10 +11,12 @@ export interface Project {
     content: string;
     codeSnippetTitle?: string;
     codeSnippetName?: string;
+    codeSnippetLanguage?: 'python' | 'sql' | 'javascript' | 'json';
     codeSnippet?: string;
   }[];
   codeSnippetTitle?: string;
   codeSnippetName?: string;
+  codeSnippetLanguage?: 'python' | 'sql' | 'javascript' | 'json';
   codeSnippet?: string;
   tags: string[];
   metrics: {
