@@ -6,6 +6,31 @@ import { portfolio } from '../data/portfolio';
 const AboutPage: React.FC = () => {
   const { profile, education, experience, certifications } = portfolio;
 
+  const SkillGroup = ({ title, icon, category }: { title: string, icon: string, category: string }) => {
+    const filtered = SKILLS.filter(s => s.category === category);
+    return (
+      <div className="bg-white dark:bg-[#1c1f27] rounded-xl border border-slate-200 dark:border-border-dark p-6 shadow-sm">
+        <h3 className="text-lg font-bold mb-6 text-slate-900 dark:text-white flex items-center gap-2">
+          <span className="material-symbols-outlined text-primary">{icon}</span>
+          {title}
+        </h3>
+        <div className="flex flex-col gap-5">
+          {filtered.map(skill => (
+            <div key={skill.name} className="group">
+              <div className="flex justify-between mb-1">
+                <span className="text-sm font-medium text-slate-600 dark:text-slate-300">{skill.name}</span>
+                <span className="text-sm font-bold text-primary">{skill.level}%</span>
+              </div>
+              <div className="h-2 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                <div className="h-full bg-primary rounded-full transition-all duration-1000" style={{width: `${skill.level}%`}}></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="layout-content-container flex flex-col max-w-[1200px] w-full px-6 py-10 gap-12 mx-auto">
       <section>
@@ -65,12 +90,21 @@ const AboutPage: React.FC = () => {
               <h3 className="text-2xl font-bold">Education</h3>
             </div>
             <div className="space-y-6">
-              {education.map((edu, i) => (
-                <div key={i} className="p-5 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-border-dark">
-                  <h4 className="font-bold text-lg text-slate-900 dark:text-white">{edu.degree}</h4>
-                  <p className="text-primary text-sm font-semibold">{edu.institution} ({edu.period})</p>
-                </div>
-              ))}
+              {education.map((edu, i) => {
+                const isCurrent = edu.period.toLowerCase().includes('present');
+                return (
+                  <div key={i} className="p-5 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-border-dark">
+                    <h4 className="font-bold text-lg text-slate-900 dark:text-white">{edu.degree}</h4>
+                    <p className={`text-sm mt-1 transition-colors ${
+                      isCurrent 
+                        ? 'text-primary font-semibold' 
+                        : 'text-slate-500 dark:text-slate-400 font-medium'
+                    }`}>
+                      {edu.institution} ({edu.period})
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </section>
 
@@ -113,25 +147,9 @@ const AboutPage: React.FC = () => {
         </div>
 
         <div className="lg:col-span-4 flex flex-col gap-8">
-          <div className="bg-white dark:bg-[#1c1f27] rounded-xl border border-slate-200 dark:border-border-dark p-6 shadow-sm">
-            <h3 className="text-lg font-bold mb-6 text-slate-900 dark:text-white flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary">bar_chart</span>
-              Tech Skills
-            </h3>
-            <div className="flex flex-col gap-5">
-              {SKILLS.map(skill => (
-                <div key={skill.name} className="group">
-                  <div className="flex justify-between mb-1">
-                    <span className="text-sm font-medium text-slate-600 dark:text-slate-300">{skill.name}</span>
-                    <span className="text-sm font-bold text-primary">{skill.level}%</span>
-                  </div>
-                  <div className="h-2 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                    <div className="h-full bg-primary rounded-full transition-all duration-1000" style={{width: `${skill.level}%`}}></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <SkillGroup title="Programming" icon="code" category="Programming" />
+          <SkillGroup title="Tools" icon="build" category="Tools" />
+          <SkillGroup title="Soft Skills" icon="psychology" category="Soft Skills" />
 
           <div className="bg-white dark:bg-[#1c1f27] rounded-xl border border-slate-200 dark:border-border-dark p-6 shadow-sm">
             <h3 className="text-lg font-bold mb-4 text-slate-900 dark:text-white">Languages</h3>

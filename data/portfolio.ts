@@ -137,11 +137,20 @@ export const portfolio = {
     }
   ] as Project[],
   "skills": [
-    { "name": "Advanced MS Excel", "level": 95, "category": "Core" },
-    { "name": "Data Visualization", "level": 85, "category": "Core" },
-    { "name": "Data Analytics", "level": 80, "category": "Core" },
-    { "name": "Python", "level": 70, "category": "Languages" },
-    { "name": "Power BI", "level": 75, "category": "Visualization" },
-    { "name": "ERP Software", "level": 85, "category": "Systems" }
+    // Programming
+    { "name": "Python", "level": 85, "category": "Programming" },
+    { "name": "SQL", "level": 90, "category": "Programming" },
+    { "name": "DAX", "level": 75, "category": "Programming" },
+    { "name": "Basic R", "level": 60, "category": "Programming" },
+    // Tools
+    { "name": "MS Excel", "level": 98, "category": "Tools" },
+    { "name": "MS Power BI", "level": 85, "category": "Tools" },
+    { "name": "PostGre SQL", "level": 80, "category": "Tools" },
+    { "name": "LLM Prompting", "level": 90, "category": "Tools" },
+    // Soft Skills
+    { "name": "Team Collaboration", "level": 95, "category": "Soft Skills" },
+    { "name": "Communication", "level": 90, "category": "Soft Skills" },
+    { "name": "Presentation", "level": 85, "category": "Soft Skills" },
+    { "name": "Story Telling", "level": 90, "category": "Soft Skills" }
   ] as Skill[]
 };
