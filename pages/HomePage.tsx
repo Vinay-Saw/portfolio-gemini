@@ -77,7 +77,7 @@ const HomePage: React.FC = () => {
             </div>
           </div>
 
-          {/* KPI Stats Section - Rounded Card Style as in Screenshot */}
+          {/* KPI Stats Section - Rounded Card Style */}
           <div className="py-12 md:py-20">
              <div className="bg-white dark:bg-[#1a2230] rounded-[2.5rem] p-10 md:p-14 border border-slate-200 dark:border-slate-800/50 shadow-xl shadow-slate-200/50 dark:shadow-none">
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center">
@@ -145,8 +145,8 @@ const HomePage: React.FC = () => {
           {/* Contact CTA Section */}
           <div className="py-20">
             <div className="rounded-[2.5rem] bg-slate-50 dark:bg-[#1a2230] border border-slate-200 dark:border-slate-800/50 p-12 md:p-16 text-center shadow-inner relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 blur-2xl group-hover:bg-primary/10 transition-colors"></div>
-              <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/5 rounded-full -ml-16 -mb-16 blur-2xl group-hover:bg-primary/10 transition-colors"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full -mr-16 -mt-16 blur-2xl group-hover:bg-primary/20 transition-colors"></div>
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/10 rounded-full -ml-16 -mb-16 blur-2xl group-hover:bg-primary/20 transition-colors"></div>
               
               <h2 className="text-slate-900 dark:text-white text-3xl md:text-5xl font-black mb-6 tracking-tight relative z-10">Ready to collaborate?</h2>
               <p className="text-slate-600 dark:text-slate-400 text-lg mb-10 max-w-2xl mx-auto leading-relaxed relative z-10">
@@ -155,7 +155,7 @@ const HomePage: React.FC = () => {
               <div className="flex flex-wrap justify-center gap-4 relative z-10">
                 <button 
                   onClick={() => navigate('/contact')}
-                  className="inline-flex cursor-pointer items-center justify-center rounded-xl h-14 px-10 bg-primary hover:bg-blue-600 transition-all text-white font-bold text-lg shadow-xl shadow-primary/20 hover:-translate-y-1"
+                  className="inline-flex cursor-pointer items-center justify-center rounded-xl h-14 px-10 bg-primary hover:bg-blue-600 transition-all text-white font-bold text-lg shadow-xl shadow-primary/20 hover:-translate-y-1 active:scale-95"
                 >
                   Contact Vinay
                   <span className="material-symbols-outlined ml-2">mail</span>

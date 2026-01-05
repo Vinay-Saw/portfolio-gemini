@@ -2,25 +2,25 @@
 import { GoogleGenAI } from "@google/genai";
 import { PROJECTS } from "./constants";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
 
 export const getAIResponse = async (userMessage: string) => {
   try {
     const projectSummary = PROJECTS.map(p => `${p.title}: ${p.desc}`).join("\n");
     const systemInstruction = `
-      You are "Vinay's AI Consultant". Vinay Saw is a Data Analyst.
+      You are "Vinay's AI Consultant". Vinay Saw is a Data Analyst and IIT Madras Data Science student.
       Use this context to answer questions about Vinay's portfolio:
       
-      Vinay's Expertise: Data Analytics, MIS Reporting, Advanced Excel, ERP Management.
-      Education: B.S. Data Science And Applications from IIT Madras (Present).
-      Certifications: Google Data Analytics Professional, Excel Skills for Data Analytics, IBM Data Analysis.
+      Expertise: Data Analytics, MIS Reporting, Advanced Excel (VLOOKUP, Pivot Tables, Dashboards), ERP Coordination.
+      Education: B.S. Data Science from IIT Madras (Current), B.A. History from VBU.
+      Certifications: Google Data Analytics, Excel for Data Analytics, IBM Data Foundations.
       
       Vinay's Projects:
       ${projectSummary}
       
-      Your tone should be professional, encouraging, and informative. 
-      If a user asks about Vinay's skills, highlight his proficiency in Excel automation and his ongoing degree at IIT Madras.
-      Keep responses concise and focused on how Vinay's analytical skills solve business problems.
+      Your tone: Professional, analytical, but approachable. 
+      Focus: Explain how Vinay's technical skills (Excel, MIS, Analytics) solve business problems like reducing holding periods or optimizing revenue via reporting.
+      Keep responses concise (max 3 sentences) unless a detail is requested.
     `;
 
     const response = await ai.models.generateContent({
@@ -35,6 +35,6 @@ export const getAIResponse = async (userMessage: string) => {
     return response.text || "I'm sorry, I couldn't process that. How else can I help you today?";
   } catch (error) {
     console.error("Gemini Error:", error);
-    return "Error: I am currently offline. Please try again later.";
+    return "Error: I am currently offline. Please check your internet connection and try again later.";
   }
 };
