@@ -108,7 +108,7 @@ export const portfolio = {
     {
       "id": "1",
       "title": "Diamond Industry MIS Reporting",
-      "category": ["Analytics","ML"],
+      "category": "Analytics",
       "image": "https://images.unsplash.com/photo-1551033406-611cf9a28f67?auto=format&fit=crop&q=80&w=800",
       "desc": "Streamlined day-to-day operations for a lab-grown diamond manufacturer using advanced Excel automation.",
       "longDesc": "At Pure Cultured Diamonds LLP, I managed extensive datasets in the diamond industry. I developed automated Excel templates utilizing VLOOKUP, pivot tables, and conditional formatting to reduce workforce requirements and create meaningful reports for international sales teams.",
