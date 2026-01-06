@@ -3,87 +3,80 @@ import { GoogleGenAI } from "@google/genai";
 import { portfolio } from "../data/portfolio";
 
 /**
- * Fetches the resume PDF and converts it to a base64 string for the Gemini API.
- * Uses the proxy-free direct download link.
+ * Robustly fetches the resume PDF and converts it to a base64 string.
+ * Optimized for browser environments using ArrayBuffer and btoa.
  */
 async function fetchResumeAsBase64(url: string): Promise<string | null> {
   try {
     const response = await fetch(url);
     if (!response.ok) throw new Error('Failed to fetch resume');
-    const blob = await response.blob();
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const result = reader.result as string;
-        const base64String = result.split(',')[1];
-        resolve(base64String);
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
-    });
+    const arrayBuffer = await response.arrayBuffer();
+    
+    // Convert ArrayBuffer to Base64 string safely in browser
+    let binary = '';
+    const bytes = new Uint8Array(arrayBuffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
   } catch (error) {
-    console.warn("Could not fetch PDF for AI analysis. Falling back to structured web content.", error);
+    console.warn("PDF Context unavailable. Falling back to structured web data.", error);
     return null;
   }
 }
 
 /**
- * Interface with Vinay's custom Gemini Consultant.
- * The model receives both the structured web content and the actual PDF document.
+ * Interface with Vinay's AI Portfolio Assistant.
+ * Combines live web data and the binary resume PDF for comprehensive answers.
  */
 export const getAIResponse = async (userMessage: string) => {
   try {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-    const { profile, experience, projects, education, certifications, skills } = portfolio;
+    const { profile, experience, projects, education, skills } = portfolio;
 
-    // Build a structured "Web Content" summary for the AI
+    // Structured Web Content (Parsed from portfolio.ts)
     const webContentContext = `
-      [WEB PROFILE]
-      Name: ${profile.name}
-      Role: ${profile.role}
-      Tagline: ${profile.tagline}
-      Location: ${profile.location}
-      Availability: ${profile.relocationInfo}
-      
-      [WEB EXPERIENCE SUMMARY]
-      ${experience.map(e => `- ${e.title} at ${e.company} (${e.period}): ${e.points.join(". ")}`).join("\n")}
-      
-      [WEB PROJECTS]
-      ${projects.map(p => `- ${p.title}: ${p.desc} (Tech: ${p.tech.join(", ")})`).join("\n")}
-      
-      [WEB EDUCATION]
-      ${education.map(ed => `- ${ed.degree} from ${ed.institution}`).join("\n")}
-      
-      [WEB SKILLS]
-      ${skills.map(s => `${s.name} (${s.level}%)`).join(", ")}
+[LIVE PORTFOLIO DATA]
+Name: ${profile.name}
+Current Role: ${profile.role}
+Summary: ${profile.description}
+Location: ${profile.location} (${profile.relocationInfo})
+
+[EXPERIENCE SUMMARY]
+${experience.map(e => `- ${e.title} at ${e.company} (${e.period}): ${e.points.join(". ")}`).join("\n")}
+
+[PROJECTS]
+${projects.map(p => `- ${p.title}: ${p.desc} (Tech: ${p.tech.join(", ")})`).join("\n")}
+
+[SKILLS]
+${skills.map(s => `${s.name} (${s.level}%)`).join(", ")}
     `;
 
-    // Fetch PDF Binary from the resume link
+    // Fetch the binary PDF for detailed multi-modal reasoning
     const pdfBase64 = await fetchResumeAsBase64(profile.links.resumeDownload);
 
     const systemInstruction = `
-      You are "Vinay's AI Portfolio Assistant", an expert consultant representing Vinay Saw.
-      
-      SOURCES OF TRUTH:
-      1. ${pdfBase64 ? 'ATTACHED PDF: This is Vinay\'s official full-length resume.' : 'PDF NOT AVAILABLE: Use web content only.'}
-      2. WEB CONTENT: Structured data from his live portfolio website (provided below).
-      
-      INSTRUCTIONS:
-      - Cross-reference both sources when available.
-      - Use Markdown formatting: **bold** for emphasis, lists, and [links](url).
-      - Be professional, helpful, and concise.
-      - Resume download link (It should redirect in a new tab.): ${profile.links.resume} 
-      - - Never hallucinate certifications, skills, education or projects not listed above.
-      
-      STRUCTURED WEB CONTENT:
-      ${webContentContext}
+You are "Vinay's AI Portfolio Assistant". You represent Vinay Saw, a Data Analyst and IIT Madras Data Science student.
+
+KNOWLEDGE SOURCES:
+1. ATTACHED PDF: Use this for specific details (contacts, references, specific names like "Rajesh Sir") not in the web data.
+2. WEB CONTENT: Use this for live project descriptions and general profile info.
+
+BEHAVIOR:
+- ALWAYS check both sources. If a specific person is mentioned, it is likely in the PDF's references or experience section.
+- NEVER guess. If info is missing from both, politely state that it's not in the official records.
+- FORMATTING: Use strict Markdown. **Bold** key terms, use bulleted lists, and format links as [Link Text](url).
+- If asked for his resume document, use: ${profile.links.resume}
+- Provide analytical, professional, and concise answers.
     `;
 
-    const parts: any[] = [{ text: userMessage }];
+    // Build the multimodal parts array
+    const parts: any[] = [];
     
-    // Attach PDF if successfully fetched
+    // 1. Add PDF binary part if available
     if (pdfBase64) {
-      parts.unshift({
+      parts.push({
         inlineData: {
           mimeType: 'application/pdf',
           data: pdfBase64
@@ -91,23 +84,25 @@ export const getAIResponse = async (userMessage: string) => {
       });
     }
 
-    // Add user message
-    parts.push({ text: userMessage });
+    // 2. Add the web context as a text part
+    parts.push({ text: `WEB CONTEXT:\n${webContentContext}` });
+
+    // 3. Add the user's specific query
+    parts.push({ text: `USER QUERY: ${userMessage}` });
 
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
-      contents: [{ parts }],
+      contents: { parts },
       config: {
         systemInstruction,
-        temperature: 0.15,
-        topP: 0.8,
+        temperature: 0.1, // High precision
+        topP: 0.9,
       },
     });
 
-    const resultText = response.text?.trim();
-    return resultText || "I've analyzed Vinay's profile, but I couldn't find that specific detail. You can view his full resume here: " + profile.links.resume;
+    return response.text?.trim() || "I couldn't process that request properly. You can find Vinay's full details in his resume here: " + profile.links.resume;
   } catch (error) {
     console.error("Gemini AI Service Error:", error);
-    return "I'm having a technical difficulty reading Vinay's full documents. You can contact him directly at vinaysaw@duck.com or view his resume manually here: " + portfolio.profile.links.resume;
+    return "I'm having a technical issue reading the documents. Please contact Vinay directly at vinaysaw@duck.com.";
   }
 };
