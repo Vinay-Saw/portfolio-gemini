@@ -36,7 +36,7 @@ const AboutPage: React.FC = () => {
       <section>
         <div className="flex flex-col gap-8 md:flex-row items-center md:items-start">
           <div className="relative group shrink-0">
-            <div className="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white dark:border-border-dark shadow-xl bg-center bg-cover" style={{backgroundImage: 'url("https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800")'}}></div>
+            <div className="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white dark:border-border-dark shadow-xl bg-center bg-cover" style={{backgroundImage: 'url("https://drive.google.com/uc?export=view&id=1VGrJ3rYh1iTxqgiYpMC_V_TL-dh-3xcj")'}}></div>
             <div className="absolute bottom-4 right-4 bg-primary text-white p-2 rounded-full shadow-lg">
               <span className="material-symbols-outlined text-xl">analytics</span>
             </div>
