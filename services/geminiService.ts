@@ -3,106 +3,72 @@ import { GoogleGenAI } from "@google/genai";
 import { portfolio } from "../data/portfolio";
 
 /**
- * Robustly fetches the resume PDF and converts it to a base64 string.
- * Optimized for browser environments using ArrayBuffer and btoa.
- */
-async function fetchResumeAsBase64(url: string): Promise<string | null> {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error('Failed to fetch resume');
-    const arrayBuffer = await response.arrayBuffer();
-    
-    // Convert ArrayBuffer to Base64 string safely in browser
-    let binary = '';
-    const bytes = new Uint8Array(arrayBuffer);
-    const len = bytes.byteLength;
-    for (let i = 0; i < len; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    return btoa(binary);
-  } catch (error) {
-    console.warn("PDF Context unavailable. Falling back to structured web data.", error);
-    return null;
-  }
-}
-
-/**
  * Interface with Vinay's AI Portfolio Assistant.
- * Combines live web data and the binary resume PDF for comprehensive answers.
+ * Relies exclusively on high-fidelity structured data from the portfolio data source.
  */
 export const getAIResponse = async (userMessage: string) => {
   try {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-    const { profile, experience, projects, education, skills } = portfolio;
+    const { profile, experience, projects, education, skills, certifications } = portfolio;
 
-    // Structured Web Content (Parsed from portfolio.ts)
-    const webContentContext = `
-[LIVE PORTFOLIO DATA]
+    // Structured context for the AI to understand the full professional profile
+    const context = `
+[PROFESSIONAL PROFILE]
 Name: ${profile.name}
-Current Role: ${profile.role}
+Role: ${profile.role}
 Summary: ${profile.description}
-Location: ${profile.location} (${profile.relocationInfo})
+Location: ${profile.location}
+Availability: ${profile.relocationInfo}
 
-[EXPERIENCE SUMMARY]
+[WORK EXPERIENCE]
 ${experience.map(e => `- ${e.title} at ${e.company} (${e.period}): ${e.points.join(". ")}`).join("\n")}
 
-[PROJECTS]
-${projects.map(p => `- ${p.title}: ${p.desc} (Tech: ${p.tech.join(", ")})`).join("\n")}
+[PROJECTS & CASE STUDIES]
+${projects.map(p => `- ${p.title} (${p.categories.join(", ")}): ${p.desc}. Key Tech: ${p.tech.join(", ")}`).join("\n")}
 
-[SKILLS]
+[EDUCATION]
+${education.map(ed => `- ${ed.degree} from ${ed.institution} (${ed.period})`).join("\n")}
+
+[SKILLS & PROFICIENCIES]
 ${skills.map(s => `${s.name} (${s.level}%)`).join(", ")}
-    `;
 
-    // Fetch the binary PDF for detailed multi-modal reasoning
-    const pdfBase64 = await fetchResumeAsBase64(profile.links.resumeDownload);
+[CERTIFICATIONS]
+${certifications.map(c => `- ${c.name} (${c.date})`).join("\n")}
+    `;
 
     const systemInstruction = `
-You are "Vinay's AI Portfolio Assistant". You represent Vinay Saw, a Data Analyst and IIT Madras Data Science student.
-
-KNOWLEDGE SOURCES:
-1. ATTACHED PDF: Use this for specific details (contacts, references, specific names like "Rajesh Sir") not in the web data.
-2. WEB CONTENT: Use this for live project descriptions and general profile info.
-
-BEHAVIOR:
-- ALWAYS check both sources. If a specific person is mentioned, it is likely in the PDF's references or experience section.
-- NEVER guess. If info is missing from both, politely state that it's not in the official records.
-- FORMATTING: Use strict Markdown. **Bold** key terms, use bulleted lists, and format links as [Link Text](url).
-- If asked for his resume document, use: ${profile.links.resume}
-- Provide analytical, professional, and concise answers.
+      You are "Vinay's AI Portfolio Consultant". You represent Vinay Saw, a Data Analyst and IIT Madras Data Science student.
+      
+      CORE GUIDELINES:
+      - Use ONLY the provided context to answer questions about Vinay's professional background.
+      - If asked about something not in the context, politely state that you represent Vinay's professional work and suggest contacting him directly at ${profile.email}.
+      - Maintain a professional, analytical, yet approachable tone.
+      - Use Markdown for formatting: **bold** for key terms, bullet points for lists, and [Link Text](URL) for links.
+      - If asked for his resume, provide this direct link: ${profile.links.resume}
+      
+      USER INTERACTION:
+      - Be concise but thorough.
+      - Highlight Vinay's strengths in MIS, Operations, Data Analysis and Data Science.
     `;
-
-    // Build the multimodal parts array
-    const parts: any[] = [];
-    
-    // 1. Add PDF binary part if available
-    if (pdfBase64) {
-      parts.push({
-        inlineData: {
-          mimeType: 'application/pdf',
-          data: pdfBase64
-        }
-      });
-    }
-
-    // 2. Add the web context as a text part
-    parts.push({ text: `WEB CONTEXT:\n${webContentContext}` });
-
-    // 3. Add the user's specific query
-    parts.push({ text: `USER QUERY: ${userMessage}` });
 
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
-      contents: { parts },
+      contents: { 
+        parts: [
+          { text: `CONTEXT DATA:\n${context}` },
+          { text: `USER QUESTION: ${userMessage}` }
+        ] 
+      },
       config: {
         systemInstruction,
-        temperature: 0.1, // High precision
-        topP: 0.9,
+        temperature: 0.2,
+        topP: 0.8,
       },
     });
 
-    return response.text?.trim() || "I couldn't process that request properly. You can find Vinay's full details in his resume here: " + profile.links.resume;
+    return response.text?.trim() || "I'm sorry, I couldn't generate a response. Please check Vinay's contact page for more information.";
   } catch (error) {
-    console.error("Gemini AI Service Error:", error);
-    return "I'm having a technical issue reading the documents. Please contact Vinay directly at vinaysaw@duck.com.";
+    console.error("Gemini AI Consultant Error:", error);
+    return "I'm currently experiencing a high volume of requests. Please try again in a moment or contact Vinay directly at vinaysaw@duck.com.";
   }
 };

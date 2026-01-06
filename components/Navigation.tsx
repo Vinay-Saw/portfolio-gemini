@@ -6,7 +6,7 @@ import { portfolio } from '../data/portfolio';
 const Navigation: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(document.documentElement.classList.contains('dark'));
   const location = useLocation();
   const navigate = useNavigate();
   const { profile } = portfolio;
@@ -17,6 +17,20 @@ const Navigation: React.FC = () => {
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Sync state if external logic (like App.tsx initial load) changes the theme
+  useEffect(() => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          setIsDark(document.documentElement.classList.contains('dark'));
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, { attributes: true });
+    return () => observer.disconnect();
   }, []);
 
   const toggleTheme = useCallback(() => {
@@ -33,7 +47,7 @@ const Navigation: React.FC = () => {
 
   const isActive = (path: string) => location.pathname === path 
     ? "text-primary font-black" 
-    : "text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary";
+    : "text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors";
 
   return (
     <header 
@@ -65,7 +79,7 @@ const Navigation: React.FC = () => {
               <Link 
                 key={item.path} 
                 to={item.path} 
-                className={`text-sm font-semibold transition-colors ${isActive(item.path)}`}
+                className={`text-sm font-semibold ${isActive(item.path)}`}
                 aria-current={location.pathname === item.path ? 'page' : undefined}
               >
                 {item.label}
@@ -87,7 +101,7 @@ const Navigation: React.FC = () => {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
               aria-expanded={isMobileMenuOpen}
               aria-label="Toggle Mobile Menu"
-              className="md:hidden flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white focus:ring-2 focus:ring-primary focus:outline-none"
+              className="md:hidden flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white focus:ring-2 focus:ring-primary focus:outline-none transition-colors"
             >
               <span className="material-symbols-outlined text-2xl">{isMobileMenuOpen ? 'close' : 'menu'}</span>
             </button>
