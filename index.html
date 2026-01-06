@@ -27,8 +27,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
 
     <script>
-        // Polyfill process.env for the browser environment
-        window.process = window.process || { env: { API_KEY: "" } };
+        // Robust polyfill for process.env that preserves existing keys
+        window.process = window.process || { env: {} };
+        window.process.env = window.process.env || {};
     </script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
     <link href="https://fonts.googleapis.com" rel="preconnect"/>

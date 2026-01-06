@@ -9,6 +9,12 @@ const ContactPage: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { profile } = portfolio;
 
+  // Safe helper to get environment variables across different build tools
+  const getEnvVar = (key: string): string => {
+    // @ts-ignore
+    return process.env[key] || (import.meta.env && import.meta.env[key]) || '';
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formRef.current) return;
@@ -16,12 +22,17 @@ const ContactPage: React.FC = () => {
     setStatus('submitting');
 
     try {
-      const publicKey = process.env.VITE_EMAIL_JS_PUBLIC_KEY || '';
-      const serviceId = process.env.VITE_EMAIL_JS_SERVICE_ID || '';
-      const templateId = process.env.VITE_EMAIL_JS_TEMPLATE_ID || '';
+      const publicKey = getEnvVar('VITE_EMAIL_JS_PUBLIC_KEY');
+      const serviceId = getEnvVar('VITE_EMAIL_JS_SERVICE_ID');
+      const templateId = getEnvVar('VITE_EMAIL_JS_TEMPLATE_ID');
 
       if (!publicKey || !serviceId || !templateId) {
-        throw new Error('Email service configuration missing.');
+        console.error('Environment Variables Check:', { 
+          hasPublic: !!publicKey, 
+          hasService: !!serviceId, 
+          hasTemplate: !!templateId 
+        });
+        throw new Error('Email service configuration missing. Please check your Vercel Environment Variables.');
       }
 
       await emailjs.sendForm(
@@ -39,7 +50,7 @@ const ContactPage: React.FC = () => {
     } catch (err: any) {
       console.error('EmailJS Error:', err);
       setStatus('error');
-      setErrorMessage(err.message || 'Message could not be sent. Please try again or contact via email directly.');
+      setErrorMessage(err.message || "Message could not be sent. Please contact Vinay directly via email.");
     }
   };
 
@@ -102,7 +113,7 @@ const ContactPage: React.FC = () => {
                 {status === 'error' && (
                   <div className="p-3 bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm rounded-lg flex items-center gap-2 border border-red-200 dark:border-red-800 animate-in slide-in-from-top-2">
                     <span className="material-symbols-outlined text-lg">error</span>
-                    {errorMessage}
+                    <span className="font-medium">{errorMessage}</span>
                   </div>
                 )}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
