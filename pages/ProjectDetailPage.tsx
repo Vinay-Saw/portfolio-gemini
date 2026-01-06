@@ -185,12 +185,26 @@ const ProjectDetailPage: React.FC = () => {
           )}
 
           <div className="flex flex-wrap items-center gap-4 pt-4">
-            <button className="inline-flex items-center justify-center px-6 py-3 bg-primary text-white text-base font-medium rounded-lg shadow-sm hover:bg-blue-600 transition-all">
-              <span className="material-symbols-outlined mr-2">description</span> Full Report
-            </button>
-            <button className="inline-flex items-center justify-center px-6 py-3 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 rounded-lg hover:bg-slate-50 transition-all">
-              <span className="material-symbols-outlined mr-2 text-sm">visibility</span> View Dashboard
-            </button>
+            {project.fullReportUrl && (
+              <a 
+                href={project.fullReportUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center px-6 py-3 bg-primary text-white text-base font-medium rounded-lg shadow-sm hover:bg-blue-600 transition-all active:scale-95"
+              >
+                <span className="material-symbols-outlined mr-2">description</span> Full Report
+              </a>
+            )}
+            {project.dashboardUrl && (
+              <a 
+                href={project.dashboardUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center px-6 py-3 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-all active:scale-95"
+              >
+                <span className="material-symbols-outlined mr-2 text-sm">visibility</span> View Dashboard
+              </a>
+            )}
           </div>
         </header>
 
@@ -220,11 +234,23 @@ const ProjectDetailPage: React.FC = () => {
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center">
               <span className="w-1.5 h-8 bg-primary rounded-full mr-3"></span> Analytical Approach
             </h2>
-            <div className="space-y-6">
+            <div className="space-y-10">
                {project.approach.map((step, idx) => (
-                 <div key={idx} className="p-6 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border dark:border-border-dark">
-                    <h4 className="font-bold mb-2 text-slate-900 dark:text-white">{idx + 1}. {step.title}</h4>
-                    <p className="text-slate-600 dark:text-slate-300">{step.content}</p>
+                 <div key={idx} className="p-8 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border dark:border-border-dark shadow-sm">
+                    <h4 className="font-bold text-xl mb-3 text-slate-900 dark:text-white">{idx + 1}. {step.title}</h4>
+                    <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">{step.content}</p>
+                    
+                    {step.image && (
+                      <div className="mb-6 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-900">
+                        <img 
+                          src={step.image} 
+                          alt={`Visual for ${step.title}`} 
+                          className="w-full h-auto object-cover max-h-[400px]"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+
                     {step.codeSnippet && (
                       <CodeBlock 
                         title={step.codeSnippetTitle} 

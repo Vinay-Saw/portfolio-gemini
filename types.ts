@@ -2,13 +2,14 @@
 export interface Project {
   id: string;
   title: string;
-  categories: ('ML' | 'NLP' | 'Vision' | 'Analytics' | 'Engineering' | 'Finance' | 'GenAI')[];
+  categories: ('ML' | 'NLP' | 'Vision' | 'Analytics' | 'Ecommerce' | 'Finance' | 'GenAI')[];
   image: string;
   desc: string;
   longDesc: string;
   approach: { 
     title: string; 
     content: string;
+    image?: string; // New field for approach-specific visuals
     codeSnippetTitle?: string;
     codeSnippetName?: string;
     codeSnippetLanguage?: 'python' | 'sql' | 'javascript' | 'json';
@@ -28,6 +29,8 @@ export interface Project {
   githubUrl?: string;
   demoUrl?: string;
   credentialUrl?: string;
+  fullReportUrl?: string; // New field for project report
+  dashboardUrl?: string;   // New field for interactive dashboard
 }
 
 export interface Skill {

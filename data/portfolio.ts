@@ -16,7 +16,7 @@ export const portfolio = {
     "links": {
       "linkedin": "https://linkedin.com/in/vinaysaw",
       "github": "https://github.com/vinay-saw",
-      "resume": "#"
+      "resume": "https://drive.google.com/file/d/1MQlAS2Lbnh8xHV5fWBOT708_Faf3iX6K/view?usp=drivesdk"
     }
   },
   "education": [
@@ -112,10 +112,13 @@ export const portfolio = {
       "image": "https://images.unsplash.com/photo-1551033406-611cf9a28f67?auto=format&fit=crop&q=80&w=800",
       "desc": "Streamlined day-to-day operations for a lab-grown diamond manufacturer using advanced Excel automation.",
       "longDesc": "At Pure Cultured Diamonds LLP, I managed extensive datasets in the diamond industry. I developed automated Excel templates utilizing VLOOKUP, pivot tables, and conditional formatting to reduce workforce requirements and create meaningful reports for international sales teams.",
+      "fullReportUrl": "https://docs.google.com/document/d/1-example-report",
+      "dashboardUrl": "https://public.tableau.com/views/diamond-example",
       "approach": [
         {
           "title": "Data Consolidation",
           "content": "Aggregated fragmented memo records and vendor data into a centralized Excel ecosystem using Power Query. This involved reconciling physical inventory with digital records across multiple offices.",
+          "image": "https://images.unsplash.com/photo-1504868584819-f8e90ec2cd5c?auto=format&fit=crop&q=80&w=1200",
           "codeSnippetTitle": "Inventory Query",
           "codeSnippetName": "fetch_stock.sql",
           "codeSnippetLanguage": "sql",
@@ -149,6 +152,7 @@ export const portfolio = {
       "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
       "desc": "Weekly and monthly sales performance reporting for Fujitec Express Limited to drive revenue growth.",
       "longDesc": "Managed customer records and tracked performance metrics for an elevator installation specialist. By providing weekly and monthly data-driven recommendations, I supported the sales team in prioritizing tasks and allocating resources efficiently.",
+      "fullReportUrl": "https://docs.google.com/document/d/2-example-report",
       "approach": [
         {
           "title": "KPI Definition",
@@ -156,7 +160,8 @@ export const portfolio = {
         },
         {
           "title": "ETL Pipeline",
-          "content": "Extracted raw ERP data, performed rigorous cleaning to remove duplicates, and mapped sales activities to specific timelines. Used Python scripts for automated data extraction from legacy systems."
+          "content": "Extracted raw ERP data, performed rigorous cleaning to remove duplicates, and mapped sales activities to specific timelines. Used Python scripts for automated data extraction from legacy systems.",
+          "image": "https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&q=80&w=1200"
         },
         {
           "title": "Insight Generation",
@@ -194,6 +199,7 @@ export const portfolio = {
         {
           "title": "Model Evaluation",
           "content": "Tested multiple algorithms including SVM and Random Forest, settling on Random Forest for its superior handling of non-linear relationships and high accuracy (85%). Fine-tuned hyperparameters using GridSearch.",
+          "image": "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&q=80&w=1200",
           "codeSnippetTitle": "Model Training",
           "codeSnippetName": "train_model.py",
           "codeSnippetLanguage": "python",
@@ -235,6 +241,7 @@ export const portfolio = {
         {
           "title": "Testing & Iteration",
           "content": "Conducted A/B tests on generated content to measure engagement and search ranking performance compared to human-written drafts, seeing a 30% increase in content output.",
+          "image": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=1200",
           "codeSnippetTitle": "Implementation",
           "codeSnippetName": "python.py",
           "codeSnippetLanguage": "python",
