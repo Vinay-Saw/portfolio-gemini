@@ -61,7 +61,7 @@ const HomePage: React.FC = () => {
             <div className="w-full md:w-[45%] flex justify-center md:justify-end mt-12 md:mt-0">
               <div className="relative w-full aspect-[4/5] max-w-[380px] rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-white/5 bg-slate-100 dark:bg-slate-800">
                 <img 
-                  src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800"
+                  src="https://drive.google.com/file/d/1tL7Q1YmtzAy_tnGqWkfCW_acUzdCuBUz/view?usp=drivesdk"
                   alt="Vinay Saw - Professional Portrait"
                   loading="eager"
                   className="w-full h-full object-cover grayscale-[0.2] dark:grayscale-[0.4]"
