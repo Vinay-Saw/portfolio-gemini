@@ -1,20 +1,67 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Vinay Saw — Portfolio
 
-# Run and deploy your AI Studio app
+A clean, responsive portfolio website showcasing my projects, skills, and experience. Built with a modern TypeScript-based frontend.
 
-This contains everything you need to run your app locally.
+## Live Demo
+- Website: **https://vinaysaw.vercel.app/**
 
-View your app in AI Studio: https://ai.studio/apps/drive/11JxgrTZ9lA-qRsheP4DBBVBs7gQ3QZh-
+## About
+This portfolio highlights:
+- Selected projects and case studies
+- Technical skills and tools
+- Work/education background
+- Contact links and social profiles
 
-## Run Locally
+## Tech Stack
+- **TypeScript**
+- **HTML/CSS**
+- (Add your framework/tooling here, e.g., React / Next.js / Vite / Tailwind)
 
-**Prerequisites:**  Node.js
+## Getting Started (Local Setup)
 
+### Prerequisites
+- Node.js (LTS recommended)
+- npm / yarn / pnpm
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### Install & Run
+```bash
+# install dependencies
+npm install
+
+# start development server
+npm run dev
+```
+
+### Build
+```bash
+npm run build
+```
+
+### Preview (if supported)
+```bash
+npm run preview
+```
+
+## Project Structure
+> Update to match your repo layout.
+
+- `src/` — application source
+- `public/` — static assets
+- `index.html` — app entry (if applicable)
+
+## Customization
+To personalize the site, update:
+- Your name, title, and bio
+- Projects list (titles, descriptions, links, screenshots)
+- Social links (GitHub, LinkedIn, X, etc.)
+- Resume link (PDF)
+
+## Contact
+- Email: **vinaysaw@duck.com**
+- GitHub: https://github.com/Vinay-Saw
+
+## License
+If this is your personal portfolio, you can keep it as **All Rights Reserved** or choose a license (MIT, etc.).
+
+---
+If you want, share the deployed URL and the stack you used (React/Next/Vite, Tailwind, etc.), and I’ll tailor the README to match the exact commands and folder structure in your repo.
