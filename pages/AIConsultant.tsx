@@ -1,5 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { getAIResponse } from '../services/geminiService';
 import { ChatMessage } from '../types';
 
@@ -54,10 +55,12 @@ const AIConsultant: React.FC = () => {
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[85%] p-3 rounded-2xl text-sm ${
                   m.role === 'user' 
-                    ? 'bg-primary text-white rounded-tr-none' 
+                    ? 'bg-primary text-white rounded-tr-none shadow-sm' 
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-tl-none border border-slate-200 dark:border-slate-700/50 shadow-sm'
                 }`}>
-                  {m.content}
+                  <div className="markdown-content prose-invert">
+                    <ReactMarkdown>{m.content}</ReactMarkdown>
+                  </div>
                 </div>
               </div>
             ))}

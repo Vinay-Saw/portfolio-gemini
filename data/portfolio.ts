@@ -82,6 +82,14 @@ export const portfolio = {
     { "value": "IIT M", "label": "B.S. Program" },
     { "value": "5+", "label": "Projects" }
   ],
+  "references": [
+    {
+      "name": "Rajesh Sir",
+      "role": "HR Manager / Senior HR Executive",
+      "company": "Pure Cultured Diamonds LLP",
+      "relation": "Professional Contact / Hiring Authority"
+    }
+  ],
   "certifications": [
     { 
       "name": "Google Data Analytics Professional Certificate", 
