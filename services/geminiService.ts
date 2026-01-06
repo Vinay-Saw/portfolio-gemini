@@ -58,26 +58,26 @@ export const getAIResponse = async (userMessage: string) => {
       ${skills.map(s => `${s.name} (${s.level}%)`).join(", ")}
     `;
 
+    // Fetch PDF Binary from the resume link
+    const pdfBase64 = await fetchResumeAsBase64(profile.links.resumeDownload);
+
     const systemInstruction = `
       You are "Vinay's AI Portfolio Assistant", an expert consultant representing Vinay Saw.
       
       SOURCES OF TRUTH:
-      1. ATTACHED PDF: This is Vinay's official full-length resume. Use it for specific names, dates, contact details, and give first priority to it.
-      2. WEB CONTENT: This is the structured data from his live portfolio website provided below.
+      1. ${pdfBase64 ? 'ATTACHED PDF: This is Vinay\'s official full-length resume.' : 'PDF NOT AVAILABLE: Use web content only.'}
+      2. WEB CONTENT: Structured data from his live portfolio website (provided below).
       
       INSTRUCTIONS:
-      - Always cross-reference both sources. If a specific person or role is mentioned that isn't in the Web Content, search the ATTACHED PDF thoroughly.
-      - If asked "Is he mentioned anywhere 'Name'?", search the PDF binary specifically.
-      - Formatting: Always use Markdown. Use **bold** for emphasis, lists for multiple items, and [links](url) for resources.
-      - Tone: Professional, helpful, and concise.
-      - If asked for a resume download, provide: ${profile.links.resume}
+      - Cross-reference both sources when available.
+      - Use Markdown formatting: **bold** for emphasis, lists, and [links](url).
+      - Be professional, helpful, and concise.
+      - Resume download link (It should redirect in a new tab.): ${profile.links.resume} 
+      - - Never hallucinate certifications, skills, education or projects not listed above.
       
       STRUCTURED WEB CONTENT:
       ${webContentContext}
     `;
-
-    // Fetch PDF Binary from the resume link
-    const pdfBase64 = await fetchResumeAsBase64(profile.links.resumeDownload);
 
     const parts: any[] = [{ text: userMessage }];
     
@@ -90,6 +90,9 @@ export const getAIResponse = async (userMessage: string) => {
         }
       });
     }
+
+    // Add user message
+    parts.push({ text: userMessage });
 
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
