@@ -59,7 +59,15 @@ const AIConsultant: React.FC = () => {
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-tl-none border border-slate-200 dark:border-slate-700/50 shadow-sm'
                 }`}>
                   <div className="markdown-content prose-invert">
-                    <ReactMarkdown>{m.content}</ReactMarkdown>
+                    <ReactMarkdown
+                      components={{
+                        a: ({ node, ...props }) => (
+                          <a {...props} target="_blank" rel="noopener noreferrer" />
+                        )
+                      }}
+                    >
+                      {m.content}
+                    </ReactMarkdown>
                   </div>
                 </div>
               </div>
